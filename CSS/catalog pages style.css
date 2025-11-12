@@ -1,0 +1,101 @@
+#short {
+    white-space: pre-line;
+    color: #707070;
+    font-size: 14px;
+    font-style: italic;
+    line-height: 16px;
+}
+#info {
+    white-space: pre-line;
+    color: #484343;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+}
+#rightTextBar {
+    color: #484343;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 18px;
+    text-align: left;
+}
+h2 {
+    color: black;
+    font-size: 18px;
+    font-weight: 400;
+    background-color: #eaeaea;
+}
+h4 {
+    color: black;
+    font-size: 18px;
+    font-weight: 400;
+    background-color: #eaeaea;
+}
+#comments-section {
+    margin-top: 40px;
+}
+#comments-list {
+    margin-bottom: 20px;
+}
+#comment-form {
+    display: none;
+}
+#comment-text {
+    margin-top: 20px;
+    width:98%; 
+    padding:10px; 
+    border-radius:10px; 
+    border:1px solid #ccc;
+}
+#comment-login-hint {
+    display: none;
+    color: #484343;
+    font-size: 14px;
+    line-height: 16px;
+    margin-top: 20px;
+}
+.comment-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #5563DE; 
+  color: white;              
+  text-decoration: none;
+  border-radius: 8px;
+  border: none;
+  transition: background-color 0.3s, transform 0.2s;
+  cursor:pointer;
+}
+
+.comment-button:hover {
+  background-color: #3f4cc2;
+  color: white;                 
+}
+
+.comment-text-form {      
+    width: 100%; 
+    max-width: 100%;
+    font-size: 16px;
+    white-space: pre-wrap;   
+    word-wrap: break-word;   
+    overflow-wrap: break-word; 
+    line-height: 1.4em; 
+    color:#484343;
+}
+
+.add-to-cart-button {
+  margin: 20px 0;
+  padding: 10px 20px;
+  background: #5563De;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.add-to-cart-button:hover {
+    background-color: #3f4cc2;
+}
+.add-to-cart-button:disabled {
+  background: #999;
+  cursor: not-allowed;
+}

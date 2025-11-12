@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Магазин обуви Сити-Класс</title>
+  <link rel = "stylesheet" href = "../../../CSS/styles.css">
+  <link rel = "stylesheet" href = "../../../CSS/catalog pages style.css">
+</head>
+<body data-page="Male boots comments/comments boot 11">
+
+<header>
+  <div class="title">Каталог</div>
+
+  <div class="logo">
+    <img style="width: 100px; border-radius: 15px;" src="../../../Pictures/main/Logo.jpeg">
+  </div>
+
+  <div class="login">
+    <div id="auth_container">
+      <a href="../../../Pages/Login.html" class="button">Войти</a>
+    </div>
+    <script src="../../../JS/check auth script.js" 
+            data-logout-url="../../../PHP/logout.php"
+            data-check_auth-url="../../../PHP/check_auth.php"
+            data-avatar-url="../../../Pictures/main/Avatar.jpeg"></script>
+  </div>
+</header>
+
+<nav>
+  <a href="../../Catalog Female.html">Женская</a>
+  <a href="../../Catalog Male.html">Мужская</a>
+  <a href="../../Catalog Bags.html">Сумки</a>
+  <div class="cart-widget" id="cart-widget" style="display:none;">
+      🛒 <span id="cart-count">Товаров (0)</span>
+  </div>
+</nav>
+
+<main style="flex:1;">
+<div class="container">
+  <div class="sidebar">
+    <a href="../../../index.html">Главная</a>
+    <a href="../../../Pages/Catalog.html">Каталог</a>
+    <a href="../../../Pages/Contacts.html">Контакты</a>
+    <a href="../../../Pages/AboutUs.html">О нас</a>
+  </div>
+
+  <div class="content">
+    <div style="display: flex; justify-content: space-between; gap: 10px;">
+        <div id="product" style="display:flex; align-items:flex-start"></div>
+        
+        <script src="../../../JS/products script.js" data-id="10"></script>
+
+        <div style>
+            <div id = "rightTextBar">
+                <p>
+                    <h2 style = "color: #484343;
+                             font-size: 14px;
+                             font-weight: 500;
+                             line-height: 20px;
+                             text-align: left;">
+                             Безопасность платежей
+                    </h2>
+                    Данные вашей банковской <br> карты надежно защищены <br> при оплате онлайн. <br>
+
+                    <h2 style = "color: #484343;
+                             font-size: 14px;
+                             font-weight: 500;
+                             line-height: 20px;
+                             text-align: left;">
+                             Доставка на дом
+                    </h2>
+                    У вас всегда есть возможность <br>получить доставку выбранного <br>товара до квартиры. <br>
+
+                    <h2 style = "color: #484343;
+                             font-size: 14px;
+                             font-weight: 500;
+                             line-height: 20px;
+                             text-align: left;">
+                             Только качественные <br> товары проверенных <br>производителей
+                    </h2>
+                    Гарантированное качество и <br>подлинность каждой вещи, <br>которую вы у нас купите.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <button id="add-to-cart-btn" class="add-to-cart-button">
+      В корзину
+    </button>
+
+    <section id="comments-section">
+      <h2>Комментарии</h2>
+
+      <div id="comments-list">
+    
+      </div>
+
+      <div id="comment-form-container">
+        <form id="comment-form">
+         <textarea id="comment-text" rows="4" placeholder="Оставьте свой комментарий..." required></textarea>
+          <br>
+          <button type="submit" class="comment-button">Отправить</button>
+        </form>
+
+        <div id="comment-login-hint">
+          Чтобы оставить комментарий, пожалуйста, войдите в систему.
+        </div>
+      </div>
+    </section>
+
+
+  </div>
+
+    <div class="rightbar">
+    <a href="../../Catalog Bags.html" target="_blank">
+      <img src="../../../Pictures/banners/banner1.jpeg" width="120">
+    </a>
+    <a href="../../Catalog Female.html" target="_blank">
+      <img src="../../../Pictures/banners/banner2.jpeg" width="120">
+    </a>
+    <a href="../../Catalog Male.html" target="_blank">
+      <img src="../../../Pictures/banners/banner3.jpeg" width="120">
+    </a>
+    </div>
+
+</div>
+</main>
+
+<div id="privacy-modal" class="modal">
+              <div class="modal-content">
+                <span id="close-modal" class="close">&times;</span>
+                  <h2 style="display: block;
+                             margin-top: 0.83em;
+                             margin-bottom: 0.83em;
+                             font-size: 1.5em;
+                             font-weight: bold;
+                             line-height: 1.2;
+                             color: black;
+                             background-color: white;">Политика конфиденциальности</h2>
+                    <div id="policy-text"> </div>
+                    <br>
+                    <a id="download-policy" href="../../../txt/Private policy.txt" download="Private policy.txt" class="download-btn">
+                          Скачать политику
+                    </a>
+              </div>
+</div>
+
+<footer style = "text-align:center; padding:10px; background:#f0f0f0; margin-top:20px;">
+  © Сити-Класс 2025. Все права защищены. Контактный телефон: +7-913-917-38-80. Почта: 2642395@mail.ru. <a href="#" class="privacy-link">Политика конфиденциальности</a>.
+</footer>
+
+<script src="../../../JS/modal script.js" data-txt-url="../../../txt/Private policy.txt"></script>
+<script src="../../../JS/comments script.js"></script>
+<script src="../../../JS/cart widget script.js" data-check_auth-url="../../../PHP/check_auth.php" 
+                                                data-cart-url="../../../Pages/Cart.html"></script>
+
+</body>
+</html>

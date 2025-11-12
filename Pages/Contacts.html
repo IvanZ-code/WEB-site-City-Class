@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Магазин обуви Сити-Класс</title>
+  <link rel = "stylesheet" href = "../CSS/styles.css">
+</head>
+<body>
+
+<header>
+  <div class="title">Контакты</div>
+
+  <div class="logo">
+    <img style="width: 100px; border-radius: 15px;" src="../Pictures/main/Logo.jpeg">
+  </div>
+
+  <div class="login">
+    <div id="auth_container">
+      <a href="../Pages/Login.html" class="button">Войти</a>
+    </div>
+    <script src="../../../JS/check auth script.js" 
+            data-logout-url="../PHP/logout.php"
+            data-check_auth-url="../PHP/check_auth.php"
+            data-avatar-url="../Pictures/main/Avatar.jpeg"></script>
+  </div>
+</header>
+
+<nav>
+  <div class="cart-widget" id="cart-widget" style="display:none;">
+      🛒 <span id="cart-count">Товаров (0)</span>
+  </div>
+</nav>
+
+<main style="flex:1;">
+<div class="container">
+  <div class="sidebar">
+    <a href="../index.html">Главная</a>
+    <a href="../Pages/Catalog.html">Каталог</a>
+    <a href="../Pages/Contacts.html">Контакты</a>
+    <a href="../Pages/AboutUs.html">О нас</a>
+  </div>
+
+  <div class="content">
+    <h2>Наши контакты и местоположение</h2>
+    <p>Вы всегда сможете связаться с нами в рабочее время или посеить наш офис</p>
+    
+    <hr>
+    <h3> Адрес: </h3> 
+    <p> 630039, г. Новосибирск, ул. Автогенная 132 к2.
+        Ближайшая остановка транспорта — "Сад Мичуринцев".
+    </p>
+    <h3> Время работы офиса/колл-центра: </h3> 
+    <p> Понедельник-Пятница с 5:00 до 10:00 (московское время), Сб-Вс — выходной
+    </p>
+    <h3>  Пункты выдачи в г. Новосибирск: </h3> 
+    <p>  пр. Дзержинского, д. 28 Понедельник-Суббота с 12:00-19:00 (время новосибирское), Воскресенье - выходной
+    </p>
+    <h3> Контактный телефон: </h3> 
+    <p> +7-913-917-38-80 (МТС)
+    </p>
+    <h3>   Для связи по WhatsApp, Viber, Telegram: </h3> 
+    <p> +7-913-917-38-80 
+    </p>
+    <h3>  Электронная почта (по заказам и общим вопросам): </h3> 
+    <p>  2642395@mail.ru
+    </p>
+    <h3>Наше географиеское положение:</h3>
+    <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A6ba988148e557643ccbc50524a1f888804470d9cab539328fe78ceb2001bfff6&amp;source=constructor" width="500" height="400" frameborder="0"></iframe>
+       
+  </div>
+
+  <div class="rightbar">
+    <a href="Catalog Bags.html" target="_blank">
+      <img src="../Pictures/banners/banner1.jpeg" width="120">
+    </a>
+    <a href="Catalog Female.html" target="_blank">
+      <img src="../Pictures/banners/banner2.jpeg" width="120">
+    </a>
+    <a href="Catalog Male.html" target="_blank">
+      <img src="../Pictures/banners/banner3.jpeg" width="120">
+    </a>
+  </div>
+</div>
+</main>
+
+<div id="privacy-modal" class="modal">
+              <div class="modal-content">
+                <span id="close-modal" class="close">&times;</span>
+                  <h2>Политика конфиденциальности</h2>
+                    <div id="policy-text"> </div>
+                    <br>
+                    <a id="download-policy" href="../txt/Private policy.txt" download="Private policy.txt" class="download-btn">
+                          Скачать политику
+                    </a>
+              </div>
+</div>
+
+<footer style = "text-align:center; padding:10px; background:#f0f0f0; margin-top:20px;">
+  © Сити-Класс 2025. Все права защищены. Контактный телефон: +7-913-917-38-80. Почта: 2642395@mail.ru. <a href="#" class="privacy-link">Политика конфиденциальности</a>.
+</footer>
+
+<script src="../JS/modal script.js" data-txt-url="../txt/Private policy.txt"></script>
+<script src="../../../JS/cart widget script.js" data-check_auth-url="../PHP/check_auth.php" 
+                                                data-cart-url="../Pages/Cart.html"></script>
+                                                
+</body>
+</html>

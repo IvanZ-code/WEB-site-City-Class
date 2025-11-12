@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Магазин обуви Сити-Класс</title>
+  <link rel = "stylesheet" href = "../CSS/styles.css">
+  <link rel = "stylesheet" href = "../CSS/about us.css">
+</head>
+<body>
+
+<header>
+  <div class="title">О нас</div>
+
+  <div class="logo">
+    <img style="width: 100px; border-radius: 15px;" src="../Pictures/main/Logo.jpeg">
+  </div>
+
+  <div class="login">
+    <div id="auth_container">
+      <a href="../Pages/Login.html" class="button">Войти</a>
+    </div>
+    <script src="../../../JS/check auth script.js" 
+            data-logout-url="../PHP/logout.php"
+            data-check_auth-url="../PHP/check_auth.php"
+            data-avatar-url="../Pictures/main/Avatar.jpeg"></script>
+  </div>
+</header>
+
+<nav>
+  <div class="cart-widget" id="cart-widget" style="display:none;">
+      🛒 <span id="cart-count">Товаров (0)</span>
+  </div>
+</nav>
+
+<main style="flex:1;">
+<div class="container">
+  <div class="sidebar">
+    <a href="../index.html">Главная</a>
+    <a href="../Pages/Catalog.html">Каталог</a>
+    <a href="../Pages/Contacts.html">Контакты</a>
+    <a href="../Pages/AboutUs.html">О нас</a>
+  </div>
+
+  <div class="content">
+
+  <div class="background-img">
+    <img src="../Pictures/main/Big about us background.jpeg">
+  </div>
+  <div style="text-align: center;">
+    <h2>Магазин с историей</h2>
+    <h3>Продаем обувь более 20 лет</h3>
+  </div>
+  <div class="about-history">
+    <div><i></i> <span>1996</span>
+      <p>Создана оптовая обувная компания &laquo;Сити-Класс&raquo;. Открывается первая точка продаж. Обувь, которую мы привозим с китайских и российских фабрик, поступает в магазины Новосибирской области и соседних регионов.</p>
+    </div>
+    <div><i></i> <span>2008</span>
+      <p>Запускаем первый информационный сайт. Налаживаем взаимодействие с транспортными компаниями. Расширяем ассортимент обуви и аксессуаров.</p>
+    </div>
+    <div><i></i> <span>2009</span>
+      <p>Переезжаем в просторный офис-склад с выставочным залом. Начинаем обслуживать клиентов в более комфортных условиях. Увеличиваем объемы поставок обуви.</p>
+    </div>
+    <div><i></i> <span>2013</span>
+      <p>Открываем интернет-магазин. Отменяем минимальную сумму заказа. Начинаем продавать обувь в розницу. Налаживаем сотрудничество с организаторами совместных покупок. Организуем доставку обуви во все регионы России.</p>
+    </div>
+    <div><i></i> <span>2017</span>
+      <p>Обновляем дизайн и функционал интернет-магазина. Внедряем новые клиентские сервисы и систему лояльности &ndash; бонусы, акции, распродажи.</p>
+    </div>
+  </div>
+  </div>
+
+  <div class="rightbar">
+    <a href="Catalog Bags.html" target="_blank">
+      <img src="../Pictures/banners/banner1.jpeg" width="120">
+    </a>
+    <a href="Catalog Female.html" target="_blank">
+      <img src="../Pictures/banners/banner2.jpeg" width="120">
+    </a>
+    <a href="Catalog Male.html" target="_blank">
+      <img src="../Pictures/banners/banner3.jpeg" width="120">
+    </a>
+  </div>
+</div>
+</main>
+
+<div id="privacy-modal" class="modal">
+              <div class="modal-content">
+                <span id="close-modal" class="close">&times;</span>
+                  <h2>Политика конфиденциальности</h2>
+                    <div id="policy-text"> </div>
+                    <br>
+                    <a id="download-policy" href="../txt/Private policy.txt" download="Private policy.txt" class="download-btn">
+                          Скачать политику
+                    </a>
+              </div>
+</div>
+
+<footer style = "text-align:center; padding:10px; background:#f0f0f0; margin-top:20px;">
+  © Сити-Класс 2025. Все права защищены. Контактный телефон: +7-913-917-38-80. Почта: 2642395@mail.ru. <a href="#" class="privacy-link">Политика конфиденциальности</a>.
+</footer>
+
+<script src="../JS/modal script.js" data-txt-url="../txt/Private policy.txt"></script>
+<script src="../../../JS/cart widget script.js" data-check_auth-url="../PHP/check_auth.php" 
+                                                data-cart-url="../Pages/Cart.html"></script>
+
+</body>
+</html>

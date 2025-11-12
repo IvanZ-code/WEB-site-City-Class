@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Магазин обуви Сити-Класс</title>
+  <link rel = "stylesheet" href = "../CSS/styles.css">
+  <link rel="stylesheet" href="../CSS/cart.css">
+</head>
+<body>
+
+<header>
+  <div class="title">Корзина</div>
+
+  <div class="logo">
+    <img style="width: 100px; border-radius: 15px;" src="../Pictures/main/Logo.jpeg">
+  </div>
+
+  <div class="login">
+    <div id="auth_container">
+      <a href="../Pages/Login.html" class="button">Войти</a>
+    </div>
+    <script src="../../../JS/check auth script.js" 
+            data-logout-url="../PHP/logout.php"
+            data-check_auth-url="../PHP/check_auth.php"
+            data-avatar-url="../Pictures/main/Avatar.jpeg"></script>
+  </div>
+</header>
+
+<nav>
+  
+</nav>
+
+<main style="flex:1;">
+<div class="container">
+  <div class="sidebar">
+    <a href="../index.html">Главная</a>
+    <a href="../Pages/Catalog.html">Каталог</a>
+    <a href="../Pages/Contacts.html">Контакты</a>
+    <a href="../Pages/AboutUs.html">О нас</a>
+  </div>
+
+  <div class="content">
+
+    <h2>Моя корзина</h2>
+      <div id="cart-items"></div>
+   
+    <script src="../JS/cart script.js"></script>
+  </div>
+
+  <div class="rightbar">
+    <a href="Catalog Bags.html" target="_blank">
+      <img src="../Pictures/banners/banner1.jpeg" width="120">
+    </a>
+    <a href="Catalog Female.html" target="_blank">
+      <img src="../Pictures/banners/banner2.jpeg" width="120">
+    </a>
+    <a href="Catalog Male.html" target="_blank">
+      <img src="../Pictures/banners/banner3.jpeg" width="120">
+    </a>
+  </div>
+</div>
+</main>
+
+<div id="privacy-modal" class="modal">
+              <div class="modal-content">
+                <span id="close-modal" class="close">&times;</span>
+                  <h2>Политика конфиденциальности</h2>
+                    <div id="policy-text"> </div>
+                    <br>
+                    <a id="download-policy" href="../txt/Private policy.txt" download="Private policy.txt" class="download-btn">
+                          Скачать политику
+                    </a>
+              </div>
+</div>
+
+<footer style = "text-align:center; padding:10px; background:#f0f0f0; margin-top:20px;">
+  © Сити-Класс 2025. Все права защищены. Контактный телефон: +7-913-917-38-80. Почта: 2642395@mail.ru. <a href="#" class="privacy-link">Политика конфиденциальности</a>.
+</footer>
+
+<script src="../JS/modal script.js" data-txt-url="../txt/Private policy.txt"></script>
+</body>
+</html>

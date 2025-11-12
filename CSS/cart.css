@@ -1,0 +1,130 @@
+.cart-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  background: #dcdcdc;
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.cart-item-left {
+  margin-right: 15px;
+}
+
+.cart-image {
+  max-width: 80px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.cart-item-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+
+.cart-title {
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.cart-price {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.cart-total {
+  margin-top: 25px;
+  font-size: 18px;
+  text-align: right;
+  font-weight: 400;
+}
+
+
+#cart-items a {
+    color: #007bff;
+    text-decoration: none;
+}
+#cart-items a:hover {
+    color: #0056b3;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.quantity-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.quantity-btn:hover {
+  background: #0056b3;
+  transition: 0.2s;
+}
+
+.quantity-count {
+  font-weight: bold;
+  font-size: 16px;
+  min-width: 24px;
+  text-align: center;
+}
+
+.checkout-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #5563de;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.checkout-btn:hover {
+    background: #3f4cc2;
+    transition: 0.2s;
+}
+.clear-cart-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.clear-cart-btn:hover {
+  background: #c9302c;
+  transition: 0.2s;
+}
+
+.btns-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
