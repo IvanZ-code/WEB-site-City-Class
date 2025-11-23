@@ -1,33 +1,39 @@
 <?php
 session_start();
 header('Content-Type: application/json');
+require_once 'db.php';
 
 if (!isset($_SESSION['username'])) {
-    echo json_encode(['success' => false, 'message' => 'Не авторизован']);
+    echo json_encode(['success' => false, 'message' => 'Вы не авторизованы']);
     exit;
 }
 
-if (!isset($_POST['comment']) || trim($_POST['comment']) === '') {
-    echo json_encode(['success' => false, 'message' => 'Пустой комментарий']);
+$page = $_POST['page'] ?? '';
+$text = trim($_POST['comment'] ?? '');
+$username = $_SESSION['username'];
+
+if ($text === '') {
+    echo json_encode(['success' => false, 'message' => 'Комментарий пустой']);
     exit;
 }
 
 date_default_timezone_set('Europe/Moscow');
-
-$comment = trim($_POST['comment']);
-$username = $_SESSION['username'];
-$date = date('Y-m-d H:i:s');
-
-$entry = [
+// Формируем JSON для комментария
+$commentData = [
     'username' => $username,
-    'comment' => $comment,
-    'date' => $date
+    'comment' => $text,
+    'date' => date('Y-m-d H:i:s')
 ];
+$commentJson = json_encode($commentData);
 
-$jsonLine = json_encode($entry, JSON_UNESCAPED_UNICODE) . "\n";
+// Вставляем комментарий в таблицу
+$stmt = $pdo->prepare("INSERT INTO comments (page, comment_data) VALUES (:page, :comment_data) RETURNING comment_data");
+$stmt->execute([
+    'page' => $page,
+    'comment_data' => $commentJson
+]);
 
-$page = $_POST['page'] ?? 'default';
-file_put_contents("../Comments/{$page}.json", $jsonLine, FILE_APPEND | LOCK_EX);
+$entry = $stmt->fetch(PDO::FETCH_ASSOC);
 
-echo json_encode(['success' => true, 'entry' => $entry]);
+echo json_encode(['success' => true, 'entry' => json_decode($entry['comment_data'], true)]);
 ?>

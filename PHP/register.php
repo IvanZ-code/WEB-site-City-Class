@@ -19,8 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode($response);
         exit;
     }
-    if (strlen($username) > 20) {
-        $response['message'] = "Логин не должен превышать 255 символов.";
+    if (mb_strlen($username, 'UTF-8') > 20) {
+        $response['message'] = "Логин не должен превышать 20 символов.";
         echo json_encode($response);
         exit;
     }
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    if (strlen($fullname) > 100) {
+    if (mb_strlen($fullname, 'UTF-8') > 100) {
         $response['message'] = "ФИО не должно превышать 100 символов.";
         echo json_encode($response);
         exit;
