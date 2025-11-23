@@ -5,29 +5,40 @@
   const checkAuthUrl = scriptTag.getAttribute("data-check_auth-url");
   const cartUrl = scriptTag.getAttribute("data-cart-url");
 
+  async function updateCartCount() {
+    try {
+      const cartResponse = await fetch(checkAuthUrl.replace("check_auth.php", "get_user_cart.php"));
+      const cartData = await cartResponse.json();
+
+      if (cartData.cart) {
+        const totalCount = cartData.cart.reduce((sum, item) => sum + item.quantity, 0);
+        countSpan.textContent = `Товаров (${totalCount})`;
+      } else {
+        countSpan.textContent = `Товаров (0)`;
+      }
+    } catch (err) {
+      console.error("Ошибка при обновлении количества товаров:", err);
+      countSpan.textContent = `Товаров (?)`;
+    }
+  }
 
   try {
     const authResponse = await fetch(checkAuthUrl);
     const authData = await authResponse.json();
 
     if (authData.loggedIn) {
-      const username = authData.username;
       widget.style.display = "block";
 
       widget.addEventListener("click", () => {
-      window.location.href = cartUrl;
+        window.location.href = cartUrl;
       });
 
-      const cartData = JSON.parse(localStorage.getItem('cart')) || {};
-      const userCart = cartData[username] || [];
-      const totalCount = userCart.reduce((sum, item) => sum + item.quantity, 0);
-      countSpan.textContent = `Товаров (${totalCount})`;
+      // Сразу обновляем счетчик
+      await updateCartCount();
 
-      window.addEventListener("cartUpdated", () => {
-        const updated = JSON.parse(localStorage.getItem('cart')) || {};
-        const current = updated[username] || [];
-        const totalCount = current.reduce((sum, item) => sum + item.quantity, 0);
-        countSpan.textContent = `Товаров (${totalCount})`;
+      // Подписываемся на изменения корзины
+      window.addEventListener("cartUpdated", async () => {
+        await updateCartCount();
       });
     } else {
       widget.style.display = "none";
@@ -35,5 +46,6 @@
 
   } catch (err) {
     console.error("Ошибка при загрузке корзины:", err);
+    widget.style.display = "none";
   }
 })();

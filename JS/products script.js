@@ -40,47 +40,67 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
       if (isAuthenticated) {
-       
-        addToCartBtn.disabled = false;
-          addToCartBtn.textContent = "В корзину";
-          let cartData = JSON.parse(localStorage.getItem("cart")) || {};
-          const userCart = cartData[username] || [];
+          addToCartBtn.disabled = true; // пока не узнаем статус
+          addToCartBtn.textContent = "Загрузка...";
 
-          const alreadyAdded = userCart.some(p => p.id === product.id);
+          try {
+              // Получаем корзину пользователя с сервера
+              const cartResponse = await fetch("../../../PHP/get_user_cart.php");
+              const cartData = await cartResponse.json();
+              const userCart = cartData.cart || [];
 
-          if (alreadyAdded) {
-            addToCartBtn.textContent = "Уже в корзине";
-            addToCartBtn.disabled = true;
-          } else {
-            addToCartBtn.textContent = "В корзину";
+              const alreadyAdded = userCart.some(p => p.product_id === product.id);
+
+              if (alreadyAdded) {
+                  addToCartBtn.textContent = "Уже в корзине";
+                  addToCartBtn.disabled = true;
+              } else {
+                    addToCartBtn.textContent = "В корзину";
+                    addToCartBtn.disabled = false;
+              }
+
+              addToCartBtn.addEventListener("click", async () => {
+                  const response = await fetch("../../../PHP/add_product_to_cart.php", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ product_id: product.id })
+                  });
+
+                  const result = await response.json();
+
+                  if (result.error === "not_authenticated") {
+                      alert("Войдите в аккаунт!");
+                      return;
+                  }
+
+                  if (result.status === "already_exists") {
+                      addToCartBtn.textContent = "Уже в корзине";
+                      addToCartBtn.disabled = true;
+                      alert("Этот товар уже в корзине.");
+                      return;
+                  }
+
+                  if (result.status === "added") {
+                      addToCartBtn.textContent = "Уже в корзине";
+                      addToCartBtn.disabled = true;
+                      alert("Товар добавлен в корзину!");
+                      window.dispatchEvent(new Event("cartUpdated"));
+                      return;
+                  }
+
+                  alert("Ошибка добавления.");
+              });
+
+            } catch (err) {
+                  addToCartBtn.textContent = "Ошибка";
+                  addToCartBtn.disabled = true;
+            }
+
+      } else {
+                addToCartBtn.textContent = "Войдите, чтобы добавить в корзину";
+                addToCartBtn.disabled = true;
           }
 
-          addToCartBtn.addEventListener("click", () => {
-            
-            cartData = JSON.parse(localStorage.getItem("cart")) || {};
-            if (!cartData[username]) cartData[username] = [];
-
-            const alreadyAdded = cartData[username].some(p => p.id === product.id);
-            if (!alreadyAdded) {
-              cartData[username].push({ id: product.id, quantity: 1 });
-              localStorage.setItem("cart", JSON.stringify(cartData));
-              window.dispatchEvent(new Event("cartUpdated"));
-
-              addToCartBtn.textContent = "Уже в корзине";
-              addToCartBtn.disabled = true;
-
-              alert("Товар добавлен в корзину!");
-            } else {
-              addToCartBtn.textContent = "Уже в корзине";
-              addToCartBtn.disabled = true;
-              alert("Этот товар уже в корзине.");
-            }
-          });
-      } else {
-        
-          addToCartBtn.textContent = "Войдите, чтобы добавить в корзину";
-          addToCartBtn.disabled = true;
-      }
 
       
   } catch (err) {

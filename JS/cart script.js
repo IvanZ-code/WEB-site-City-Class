@@ -2,7 +2,7 @@
   const cartContainer = document.getElementById("cart-items");
 
   try {
-    
+    // 1. Проверка авторизации
     const authResponse = await fetch("../PHP/check_auth.php");
     const authData = await authResponse.json();
 
@@ -14,26 +14,27 @@
     }
 
     const username = authData.username;
-    const cartData = JSON.parse(localStorage.getItem("cart")) || {};
-    const userCart = cartData[username] || [];
 
-    
-    if (userCart.length === 0) {
+    // 2. Получаем корзину с сервера
+    const cartResponse = await fetch("../PHP/get_user_cart.php");
+    const cartData = await cartResponse.json();
+
+    if (!cartData.cart || cartData.cart.length === 0) {
       cartContainer.innerHTML = "<p>Ваша корзина пуста.</p>";
       return;
     }
 
-    const ids = [...new Set(userCart.map(item => item.id))];
+    const ids = cartData.cart.map(item => item.product_id);
 
-    const response = await fetch(`../PHP/get_products_by_ids.php?ids=${ids.join(',')}`);
-    const productsFromDb = await response.json();
+    // 3. Получаем информацию о товарах
+    const productsResponse = await fetch(`../PHP/get_products_by_ids.php?ids=${ids.join(',')}`);
+    const productsFromDb = await productsResponse.json();
 
     const groupedCart = {};
-    console.log(userCart);
-    userCart.forEach((product) => {
-      const prod = productsFromDb.find(p => p.id == product.id);
+    cartData.cart.forEach(item => {
+      const prod = productsFromDb.find(p => p.id == item.product_id);
       if (!prod) return;
-      groupedCart[prod.id] = { ...prod, quantity: product.quantity || 1};
+      groupedCart[prod.id] = { ...prod, quantity: item.quantity };
     });
 
     const list = document.createElement("div");
@@ -42,29 +43,21 @@
     const totalBlock = document.createElement("div");
     totalBlock.className = "cart-total";
 
-    
-    function updateStorageAndTotal() {
-      const newCart = [];
-      Object.values(groupedCart).forEach((p) => {
-        newCart.push({ id: p.id, quantity: p.quantity });
-      });
-      cartData[username] = newCart;
-      localStorage.setItem("cart", JSON.stringify(cartData));
-      window.dispatchEvent(new Event("cartUpdated"));
-
+    // Функция пересчёта итого
+    function updateTotal() {
       const total = Object.values(groupedCart).reduce((sum, p) => sum + p.price * p.quantity, 0);
       totalBlock.innerHTML = `<strong>Итого: ${total} руб.</strong>`;
-
-      if (newCart.length === 0) {
+      if (Object.keys(groupedCart).length === 0) {
         cartContainer.innerHTML = "<p>Ваша корзина пуста.</p>";
       }
     }
 
-    Object.values(groupedCart).forEach((product) => {
+    // 4. Отрисовка товаров
+    Object.values(groupedCart).forEach(product => {
       const item = document.createElement("div");
       item.className = "cart-item";
 
-      const imageSrc = product.image_path ? `${product.image_path}` : "../Pictures/no-image.png";
+      const imageSrc = product.image_path || "../Pictures/no-image.png";
 
       item.innerHTML = `
         <div class="cart-item-left">
@@ -85,37 +78,69 @@
       const plusBtn = item.querySelector(".plus");
       const quantityCount = item.querySelector(".quantity-count");
 
-      plusBtn.addEventListener("click", () => {
-        product.quantity++;
-        quantityCount.textContent = product.quantity;
-        updateStorageAndTotal();
+      plusBtn.addEventListener("click", async () => {
+          product.quantity++;
+          quantityCount.textContent = product.quantity;
+
+          // Отправка на сервер
+          await fetch("../PHP/update_user_cart.php", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ product_id: product.id, quantity: product.quantity })
+          });
+
+      updateTotal();
+      window.dispatchEvent(new Event("cartUpdated"));
       });
 
-      minusBtn.addEventListener("click", () => {
-        if(product.quantity === 1) {
-          if(confirm("Вы уверены, что хотите удалить этот товар из корзины?"))
-          {
-            delete groupedCart[product.id];
-            item.remove();
-            updateStorageAndTotal();
+      minusBtn.addEventListener("click", async () => {
+          if (product.quantity === 1) {
+                if (confirm("Вы уверены, что хотите удалить этот товар из корзины?")) {
+                    await fetch("../PHP/remove_product_from_cart.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: `product_id=${product.id}`
+                    });
+
+                    delete groupedCart[product.id];
+                    item.remove();
+                    updateTotal();
+                    window.dispatchEvent(new Event("cartUpdated"));
+                }
+          } else {
+                product.quantity--;
+                quantityCount.textContent = product.quantity;
+
+    
+                await fetch("../PHP/update_user_cart.php", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ product_id: product.id, quantity: product.quantity })
+                });
+
+                updateTotal();
+                window.dispatchEvent(new Event("cartUpdated"));
           }
-        } else {
-          product.quantity--;
-          quantityCount.textContent = product.quantity;
-          updateStorageAndTotal();
-        }
       });
+
 
       list.appendChild(item);
     });
 
+    // 5. Очистить корзину
     const clearBtn = document.createElement("button");
     clearBtn.textContent = "Очистить корзину";
     clearBtn.className = "clear-cart-btn";
-    clearBtn.addEventListener("click", () => {
+    clearBtn.addEventListener("click", async () => {
       if (confirm("Вы уверены, что хотите очистить корзину?")) {
-        delete cartData[username];
-        localStorage.setItem("cart", JSON.stringify(cartData));
+        // Удаляем все товары
+        await Promise.all(Object.keys(groupedCart).map(id =>
+          fetch("../PHP/remove_product_from_cart.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `product_id=${id}`
+          })
+        ));
         cartContainer.innerHTML = "<p>Корзина очищена.</p>";
         window.dispatchEvent(new Event("cartUpdated"));
       }
@@ -124,19 +149,18 @@
     const checkoutBtn = document.createElement("button");
     checkoutBtn.className = "checkout-btn";
     checkoutBtn.textContent = "Оформить заказ";
-   
 
     const buttonsContainer = document.createElement("div");
     buttonsContainer.className = "btns-container";
-
-    buttonsContainer.appendChild(clearBtn);    
+    buttonsContainer.appendChild(clearBtn);
     buttonsContainer.appendChild(checkoutBtn);
 
     cartContainer.appendChild(list);
     cartContainer.appendChild(totalBlock);
     cartContainer.appendChild(buttonsContainer);
 
-    updateStorageAndTotal();
+    updateTotal();
+
   } catch (err) {
     cartContainer.innerHTML = `<p>Ошибка загрузки корзины: ${err}</p>`;
   }
